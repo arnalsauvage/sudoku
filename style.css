@@ -51,6 +51,10 @@ input:invalid,
   background-color: #b5b5b5;
 }
 
+.candidatUnique {
+  background-color: greenyellow;
+}
+
 .focus {
   background-color: yellowgreen;
 }
@@ -63,4 +67,8 @@ button {
 
 .cote {
   width: 200px;
+}
+
+.candidatsMultiples {
+  font-size: 2vh;
 }

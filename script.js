@@ -35,7 +35,7 @@ const verifierJeu = () => {
 
     if (validiteInput === false) {
       // Si c'est pas valide, arrêtez le programme
-      return;
+      input.value = "";
     }
   }
 
@@ -81,6 +81,16 @@ function stockeDonnesSudokuDansTableau() {
     sudoku.push(sudokuLigne);
   }
   return sudoku;
+}
+
+function metAjourJeuAvecTableau(sudoku) {
+  // Récuperer toutes les valeurs
+  for (let ligne = 0; ligne < 9; ligne += 1)
+    for (let col = 0; col < 9; col += 1) {
+      const identifiant = "case" + ligne + "-" + col;
+      let monElem = document.getElementById(identifiant);
+      monElem.value = sudoku[ligne][col];
+    }
 }
 
 function verifieDoublonsDansLesCarres(sudoku) {
@@ -193,6 +203,46 @@ function verifieDoublonsDansLesLignes(sudoku) {
 // elle grise les cases ne pouvant accueillir un nombre n
 // dans sa ligne, colonne, et petit carré
 
+function montreLesCandidatsUniques() {
+  // Parcourir le jeu pour trouver toutes les valeurs de N
+  // Vérifier que les nombres saisis sont bien des nombres de 1 à 9
+
+  razClasse("injouable");
+  razClasse("focus");
+  razClasse("candidatUnique");
+
+  // Tableau qui contient toutes les lignes
+  let sudoku = stockeDonnesSudokuDansTableau();
+  let sudoku2 = stockeDonnesSudokuDansTableau();
+  // Parcourir les lignes
+  for (let ligne = 0; ligne < 9; ligne += 1) {
+    // Parcourir les éléments de la ligne
+    for (let col = 0; col < 9; col += 1) {
+      let mesCandidatsValides = candidatsValides(ligne, col, sudoku);
+      // Si la valeur est vide, ne rien faire
+      if (mesCandidatsValides.length === 1) {
+        ajouterClasseChamp("candidatUnique", ligne, col);
+        console.log("mesCandidats = " + mesCandidatsValides);
+      }
+
+      // Si la valeur est vide, ne rien faire
+      if (mesCandidatsValides.length > 1) {
+        console.log(
+          "mesCandidats ligne  " +
+            ligne +
+            " col = " +
+            col +
+            "= " +
+            mesCandidatsValides
+        );
+        sudoku2[ligne][col] = mesCandidatsValides;
+        ajouterClasseChamp("candidatsMultiples", ligne, col);
+      }
+      // Appliquer l'aide pour le nombre N trouvé dans son carré, ligne, colonne
+    }
+  }
+  metAjourJeuAvecTableau(sudoku2);
+}
 function aideNombreN(nombreN) {
   // Parcourir le jeu pour trouver toutes les valeurs de N
   // Vérifier que les nombres saisis sont bien des nombres de 1 à 9
@@ -258,7 +308,7 @@ function chargeGrille(texte) {
 
   // Difficile
   texte =
-    "25 3 49 649  52  7      452  9 4 82   251 79   3 2 6  92    568875   2     285 79";
+    "9 0478   7   63 9464  59  3   394 18  67215 9  95861  397815426 6 9423  524637981";
 
   var input = "";
   for (let ligne = 0; ligne < 9; ligne += 1) {
@@ -293,7 +343,56 @@ function razClasse(nomClasse) {
 function razAide() {
   razClasse("injouable");
   razClasse("focus");
+  razClasse("candidatUnique");
 }
+
+// recherche les candidats valides pour case ligne, col, sudoku
+function candidatsValides(ligne, col, sudoku) {
+  var mesCandidats = "123456789";
+  if (sudoku[ligne][col] > 0 && sudoku[ligne][col] < 10) mesCandidats = "";
+  else {
+    // Initialiser avec tous les candidats possibles
+
+    // parcourir la ligne, enlever toutes les valeurs
+    for (let maLigne = 0; maLigne < 9; maLigne += 1) {
+      mesCandidats = mesCandidats.replace(sudoku[maLigne][col], "");
+    }
+
+    // parcourir la colonne, enlever toutes les valeurs présentes
+    for (let maCol = 0; maCol < 9; maCol += 1) {
+      mesCandidats = mesCandidats.replace(sudoku[ligne][maCol], "");
+    }
+    // parcourir le carré, enlever toutes les valeurs présentes
+    var ligneCarre = Math.trunc(ligne / 3);
+    var colCarre = Math.trunc(col / 3);
+
+    for (let casecol = 0; casecol < 3; casecol += 1) {
+      for (let caseLigne = 0; caseLigne < 3; caseLigne += 1) {
+        mesCandidats = mesCandidats.replace(
+          sudoku[ligneCarre * 3 + caseLigne][colCarre * 3 + casecol],
+          ""
+        );
+      }
+    }
+  }
+  return mesCandidats;
+}
+
+//Javascript clic
+$(document).ready(function () {
+  $("input").click(function (event) {
+    console.log(event.target.id); //Affiche enfantDeMaDiv
+    console.log(this.id); //Affiche maDiv
+    let macol = this.id[6];
+    let maLigne = this.id[4];
+    let mesCandidatsValides = candidatsValides(
+      maLigne,
+      macol,
+      stockeDonnesSudokuDansTableau()
+    );
+    console.log("candidats :" + mesCandidatsValides);
+  });
+});
 
 const coordonneesCarres = [
   [
