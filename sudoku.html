@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="utf-8">
     <link rel="stylesheet" href="style.css">
@@ -7,33 +7,42 @@
 </head>
 <body>
 
-    <button id="button-charge" onclick="chargeGrille()">ChargGrille</button>
     <button id="button-verifier">Vérifier</button>
-    <button id="button-aide-1" onclick="aideNombreN(1)">Aide 1</button>
-    <button id="button-aide-2" onclick="aideNombreN(2)">Aide 2</button>
-    <button id="button-aide-3" onclick="aideNombreN(3)">Aide 3</button>
-    <button id="button-aide-4" onclick="aideNombreN(4)">Aide 4</button>
-    <button id="button-aide-5" onclick="aideNombreN(5)">Aide 5</button>
-    <button id="button-aide-6" onclick="aideNombreN(6)">Aide 6</button>
-    <button id="button-aide-7" onclick="aideNombreN(7)">Aide 7</button>
-    <button id="button-aide-8" onclick="aideNombreN(8)">Aide 8</button>
-    <button id="button-aide-9" onclick="aideNombreN(9)">Aide 9</button>
     <button id="button-aide-raz" onclick="razAide()">R.A.Z Aide</button>
     <button id="button-aide-candidatsUniques" onclick="montreLesCandidatsUniques()">Candidats uniques</button>
 
-
     <table>
-      <tbody>
+      <caption> Contenu du Sudoku</caption>
       <tr>
-        <td><input type="number" min="1" max="9" step="1" id="case0-0"></td>
-        <td><input type="number" min="1" max="9" step="1" id="case0-1"></td>
-        <td><input type="number" min="1" max="9" step="1" id="case0-2"></td>
-        <td><input type="number" min="1" max="9" step="1" id="case0-3"></td>
-        <td><input type="number" min="1" max="9" step="1" id="case0-4"></td>
-        <td><input type="number" min="1" max="9" step="1" id="case0-5"></td>
-        <td><input type="number" min="1" max="9" step="1" id="case0-6"></td>
-        <td><input type="number" min="1" max="9" step="1" id="case0-7"></td>
-        <td><input type="number" min="1" max="9" step="1" id="case0-8"></td>
+         
+        <th scope="col">1</th>
+         
+        <th scope="col">2</th>
+         
+        <th scope="col">3</th>
+         
+        <th scope="col">4</th>
+         
+        <th scope="col">5</th>
+         
+        <th scope="col">6</th>
+         
+        <th scope="col">7</th>
+         
+        <th scope="col">8</th>
+         
+        <th scope="col">9</th>
+      </tr>
+      <tr>
+        <td><input id="case0-0" label="case0-0" max="9" min="1" step="1" type="number"></td>
+        <td><input id="case0-1" label="case0-1" max="9" min="1" step="1" type="number"></td>
+        <td><input id="case0-2" label="case0-2" max="9" min="1" step="1" type="number"></td>
+        <td><input id="case0-3" label="case0-3" max="9" min="1" step="1" type="number"></td>
+        <td><input id="case0-4" label="case0-4" max="9" min="1" step="1" type="number"></td>
+        <td><input id="case0-5" label="case0-5" max="9" min="1" step="1" type="number"></td>
+        <td><input id="case0-6" label="case0-6" max="9" min="1" step="1" type="number"></td>
+        <td><input id="case0-7" label="case0-7" max="9" min="1" step="1" type="number"></td>
+        <td><input id="case0-8" label="case0-8" max="9" min="1" step="1" type="number"></td>
       </tr>
       <tr>
         <td><input type="number" min="1" max="9" step="1" id="case1-0"></td>
@@ -123,21 +132,14 @@
         <td><input type="number" min="1" max="9" step="1" id="case8-7"></td>
         <td><input type="number" min="1" max="9" step="1" id="case8-8"></td>
       </tr>
-      </tbody>
     </table>
 
-
-
-
-  <textarea id="name" name="saisie" rows="9" cols="33"> Contenu du sudoku </textarea>
-
-
+    <textarea cols="9" id="zonetextesudoku" name="saisie" rows="9">3  9         7          329 56 2 18 9   1      75  2      42 16   8      8 1  53 </textarea>
+    <button id="button-texte-vers-sudoku" onclick="texteVersSudoku()">Texte vers Sudoku</button>
+    <button id="button-sudoku-vers-texte" onclick="sudokuVersTexte()">Sudoku vers texte</button>
+    <button id="button-viderGrille" onclick="viderSudoku()">Vider la grille</button>
 <script src="jquery.min.js"></script>
 <script src="script.js"></script>
-
-
-</body>
-
 
 </body>
 </html>

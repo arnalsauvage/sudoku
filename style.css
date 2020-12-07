@@ -6,7 +6,7 @@
   border-spacing: 0;
   box-sizing: border-box;
   display: inline-block;
-  background: #353535;
+  background: #000065;
 }
 
 table {
@@ -48,7 +48,7 @@ input:invalid,
 }
 
 .injouable {
-  background-color: #b5b5b5;
+  background-color: #d5c5c5;
 }
 
 .candidatUnique {
@@ -62,7 +62,8 @@ button {
   display: inline;
   margin: 1em auto 0;
   padding: 0.5em 2em;
-  font-size: 1vh;
+  font-size: 3vh;
+  color: white;
 }
 
 .cote {
@@ -71,4 +72,8 @@ button {
 
 .candidatsMultiples {
   font-size: 2vh;
+}
+
+textarea {
+  background: white;
 }

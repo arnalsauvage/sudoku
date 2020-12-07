@@ -5,11 +5,11 @@ const ajouterClasseChamp = (uneClasse, ligne, col) => {
   const input = document.getElementById("case" + ligne + "-" + col);
   input.classList.add(uneClasse);
   input.addEventListener(
-    "input",
-    () => {
-      input.classList.remove(uneClasse);
-    },
-    { once: true }
+      "input",
+      () => {
+        input.classList.remove(uneClasse);
+      },
+      {once: true}
   );
 };
 
@@ -61,6 +61,11 @@ button.addEventListener("click", verifierJeu);
 // Récupérer le bouton aide 1
 const button1 = document.getElementById("button-aide-1");
 
+function viderLaGrille() {
+  var grilleVide = "                                                                                 ";
+  chargeGrille(grilleVide);
+}
+
 function stockeDonnesSudokuDansTableau() {
   const sudoku = [];
 
@@ -94,10 +99,8 @@ function metAjourJeuAvecTableau(sudoku) {
 }
 
 function verifieDoublonsDansLesCarres(sudoku) {
-  const carres = coordonneesCarres;
-
   // Parcourir les carrés
-  for (const carre of carres) {
+  for (const carre of coordonneesCarres) {
     // Pour chaque carré
 
     // On initialise un tableau de compteurs de valeurs pour ce carre
@@ -228,7 +231,7 @@ function montreLesCandidatsUniques() {
       // Si la valeur est vide, ne rien faire
       if (mesCandidatsValides.length > 1) {
         console.log(
-          "mesCandidats ligne  " +
+            "mesCandidats ligne  " +
             ligne +
             " col = " +
             col +
@@ -247,7 +250,7 @@ function aideNombreN(nombreN) {
   // Parcourir le jeu pour trouver toutes les valeurs de N
   // Vérifier que les nombres saisis sont bien des nombres de 1 à 9
 
-  console.log("Clic reçu...");
+  console.log("Clic reçu... pour nombre N : " + nombreN);
   razClasse("injouable");
   razClasse("focus");
 
@@ -261,7 +264,7 @@ function aideNombreN(nombreN) {
       const valeur = sudoku[ligne][col];
 
       // Si la valeur est vide, ne rien faire
-      if (valeur === nombreN) {
+      if (valeur == nombreN) {
         appliqueAide(col, ligne);
       }
     }
@@ -287,9 +290,9 @@ function appliqueAide(col, ligne) {
   for (let casecol = 0; casecol < 3; casecol += 1) {
     for (let caseLigne = 0; caseLigne < 3; caseLigne += 1) {
       ajouterClasseChamp(
-        "injouable",
-        ligneCarre * 3 + caseLigne,
-        colCarre * 3 + casecol
+          "injouable",
+          ligneCarre * 3 + caseLigne,
+          colCarre * 3 + casecol
       );
     }
   }
@@ -298,7 +301,7 @@ function appliqueAide(col, ligne) {
 
 // Cette fonction prend en entrée un texte contenant la liste des valeurs dans le sudoku et le charge dans la grille du html
 function chargeGrille(texte) {
-  // Facile
+  /* Facile
   texte =
     "25 3 49 649  52  7      452  9 4 82   251 79   3 2 6  92    568875   2     285 79";
 
@@ -308,19 +311,18 @@ function chargeGrille(texte) {
 
   // Difficile
   texte =
-    "9 0478   7   63 9464  59  3   394 18  67215 9  95861  397815426 6 9423  524637981";
-
+   */
   var input = "";
   for (let ligne = 0; ligne < 9; ligne += 1) {
     for (let col = 0; col < 9; col += 1) {
       const identifiant = "case" + ligne + "-" + col;
       input = document.getElementById(identifiant);
       console.log(
-        "entrée dans chargeGrille, col =" +
+          "entrée dans chargeGrille, col =" +
           col +
           " ligne = " +
           ligne +
-          "texte [ligne*9+col]" +
+          "texte [ligne*9+col] = " +
           texte[ligne * 9 + col]
       );
       if (texte[ligne * 9 + col] === " ") input.value = "";
@@ -346,6 +348,38 @@ function razAide() {
   razClasse("candidatUnique");
 }
 
+
+// export du sudoku au format texte
+function sudokuVersTexte() {
+  const sudoku = stockeDonnesSudokuDansTableau();
+  let chaine = "";
+
+  for (let maLigne = 0; maLigne < 9; maLigne += 1) {
+
+    // parcourir la colonne, enlever toutes les valeurs présentes
+    for (let maCol = 0; maCol < 9; maCol += 1) {
+      if (sudoku[maLigne][maCol] > 0 && sudoku[maLigne][maCol] < 10) {
+        chaine += sudoku[maLigne][maCol].toString();
+      } else {
+        chaine += " ";
+      }
+      console.log("sudoku[maLigne][maCol]:" + sudoku[maLigne][maCol]);
+      console.log("chaine :" + chaine);
+    }
+  }
+  $("#zonetextesudoku").val(chaine);
+  console.log("Sudoku vers chaine : " + chaine);
+  return chaine;
+}
+
+// export du sudoku au format texte
+function texteVersSudoku() {
+  // console.log("entrée avec texte : " + $("#zonetextesudoku").val());
+
+  chargeGrille($("#zonetextesudoku").val());
+
+}
+
 // recherche les candidats valides pour case ligne, col, sudoku
 function candidatsValides(ligne, col, sudoku) {
   var mesCandidats = "123456789";
@@ -369,8 +403,8 @@ function candidatsValides(ligne, col, sudoku) {
     for (let casecol = 0; casecol < 3; casecol += 1) {
       for (let caseLigne = 0; caseLigne < 3; caseLigne += 1) {
         mesCandidats = mesCandidats.replace(
-          sudoku[ligneCarre * 3 + caseLigne][colCarre * 3 + casecol],
-          ""
+            sudoku[ligneCarre * 3 + caseLigne][colCarre * 3 + casecol],
+            ""
         );
       }
     }
@@ -383,16 +417,28 @@ $(document).ready(function () {
   $("input").click(function (event) {
     console.log(event.target.id); //Affiche enfantDeMaDiv
     console.log(this.id); //Affiche maDiv
-    let macol = this.id[6];
-    let maLigne = this.id[4];
-    let mesCandidatsValides = candidatsValides(
-      maLigne,
-      macol,
-      stockeDonnesSudokuDansTableau()
-    );
-    console.log("candidats :" + mesCandidatsValides);
+    if (event.target.value.length === 1) {
+      console.log("valeur cliquée : " + event.target.value);
+      aideNombreN(event.target.value);
+    } else {
+      let macol = this.id[6];
+      let maLigne = this.id[4];
+      let mesCandidatsValides = candidatsValides(
+          maLigne,
+          macol,
+          stockeDonnesSudokuDansTableau()
+      );
+      console.log("candidats :" + mesCandidatsValides);
+    }
   });
 });
+
+function viderSudoku() {
+
+  if (confirm("Voulez-vous vraiment vider la grille ?")) {
+    viderLaGrille();
+  }
+}
 
 const coordonneesCarres = [
   [
