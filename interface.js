@@ -51,75 +51,6 @@ function viderLaGrille() {
   var grilleVide = "                                                                                 ";
   chargeGrille(grilleVide);
 }
-function verifieDoublonsDansLesCarres(sudoku) {
-  // Parcourir les carrés
-  for (const carre of coordonneesCarres) {
-    // Pour chaque carré
-
-    // On initialise un tableau de compteurs de valeurs pour ce carre
-    let tabCompteurDeValeurs = [];
-    for (let parcours = 0; parcours < 9; parcours += 1) {
-      tabCompteurDeValeurs[parcours] = 0;
-    }
-
-    // On compte combien d'occurrences de chaque nombre dans le carré
-    for (const element of carre) {
-      const ligne = element[0];
-      const col = element[1];
-      const valeur = sudoku[ligne][col];
-
-      // Si la valeur est vide, ne rien faire
-      if (valeur != "") {
-        // Sinon
-        tabCompteurDeValeurs[valeur]++;
-      }
-    }
-
-    // On applique le style invalide aux chiffres présents plusieurs fois
-    for (const element of carre) {
-      const ligne = element[0];
-      const col = element[1];
-      const valeur = sudoku[ligne][col];
-
-      // Vérifier que l'élément n'est pas dans la liste
-      if (tabCompteurDeValeurs[valeur] > 1) {
-        // Ajouter l'élément à une liste
-        ajouterClasseChamp("invalid", ligne, col);
-      }
-    }
-  }
-}
-
-function verifieDoublonsDansColonnes(sudoku) {
-  for (let col = 0; col < 9; col += 1) {
-    // On initialise un tableau de compteurs de valeurs pour cette colonne
-    let tabCompteurDeValeurs = [];
-    for (let parcours = 0; parcours < 9; parcours += 1) {
-      tabCompteurDeValeurs[parcours] = 0;
-    }
-
-    // Parcourir les éléments de la colonne pour compter les valeurs
-    for (let ligne = 0; ligne < 9; ligne += 1) {
-      const valeur = sudoku[ligne][col];
-
-      // Si la valeur est vide, ne rien faire
-      if (valeur != "") {
-        // Sinon
-        tabCompteurDeValeurs[valeur]++;
-      }
-    }
-    // Parcourir les éléments pour attribuer un style erreur aux valeurs présentes plusieurs fois
-    for (let ligne = 0; ligne < 9; ligne += 1) {
-      const valeur = sudoku[ligne][col];
-
-      // Si la valeur est vide, ne rien faire
-      if (tabCompteurDeValeurs[valeur] > 1) {
-        // Ajouter une classe d'erreur au champs
-        ajouterClasseChamp("invalid", ligne, col);
-      }
-    }
-  }
-}
 
 // Assigner l'événement click à la function vérifier
 //button1.addEventListener("click", aideNombreN(1));
@@ -129,6 +60,9 @@ function verifieDoublonsDansColonnes(sudoku) {
 // dans sa ligne, colonne, et petit carré
 
 function montreLesCandidatsUniques() {
+
+  // On remet au propre l'affichage
+
   // Parcourir le jeu pour trouver toutes les valeurs de N
   // Vérifier que les nombres saisis sont bien des nombres de 1 à 9
 
@@ -144,13 +78,13 @@ function montreLesCandidatsUniques() {
     // Parcourir les éléments de la ligne
     for (let col = 0; col < 9; col += 1) {
       let mesCandidatsValides = candidatsValides(ligne, col, sudoku);
-      // Si la valeur est vide, ne rien faire
+      // S'il n'y a qu'un candidat, on montre la case
       if (mesCandidatsValides.length === 1) {
         ajouterClasseChamp("candidatUnique", ligne, col);
         console.log("mesCandidats = " + mesCandidatsValides);
       }
 
-      // Si la valeur est vide, ne rien faire
+      // S'il y a plusieurs candidats, on les montre
       if (mesCandidatsValides.length > 1) {
         console.log(
             "mesCandidats ligne  " +
@@ -162,6 +96,9 @@ function montreLesCandidatsUniques() {
         );
         sudoku2[ligne][col] = mesCandidatsValides;
         ajouterClasseChamp("candidatsMultiples", ligne, col);
+      }
+      if (mesCandidatsValides.length < 1) {
+        supprimerClasseChamp("candidatsMultiples", ligne, col);
       }
       // Appliquer l'aide pour le nombre N trouvé dans son carré, ligne, colonne
     }
@@ -212,8 +149,6 @@ function razAide() {
   razClasse("candidatUnique");
 }
 
-
-
 // export du sudoku au format texte
 function texteVersSudoku() {
   // console.log("entrée avec texte : " + $("#zonetextesudoku").val());
@@ -243,6 +178,22 @@ $(document).ready(function () {
   });
 });
 
+//Javascript saisie sur une case de candidats change le style
+$(document).ready(function () {
+  $("input").keyup(function (event) {
+    console.log(event.target.id); //Affiche enfantDeMaDiv
+    console.log(this.id); //Affiche maDiv
+
+      let macol = this.id[6];
+      let maLigne = this.id[4];
+    if (event.target.value.length > 1) {
+      ajouterClasseChamp("candidatsMultiples", maLigne, macol);
+    }
+    else {
+      supprimerClasseChamp("candidatsMultiples", maLigne, macol);
+    }
+  });
+});
 function viderSudoku() {
 
   if (confirm("Voulez-vous vraiment vider la grille ?")) {

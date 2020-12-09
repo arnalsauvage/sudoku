@@ -4,13 +4,14 @@
 const ajouterClasseChamp = (uneClasse, ligne, col) => {
     const input = document.getElementById("case" + ligne + "-" + col);
     input.classList.add(uneClasse);
-    input.addEventListener(
-        "input",
-        () => {
-            input.classList.remove(uneClasse);
-        },
-        {once: true}
-    );
+};
+
+// Cette fonction ajoute la classe 'classe' à un input d'identifiant caseLigne-Col
+// input id="case0-5" pour la case 1ere ligne 6è colonne
+
+const supprimerClasseChamp = (uneClasse, ligne, col) => {
+    const input = document.getElementById("case" + ligne + "-" + col);
+    input.classList.remove(uneClasse);
 };
 
 // Applique l'aide pour une valeur en ligne / colonne
@@ -37,6 +38,7 @@ function appliqueAide(col, ligne) {
             );
         }
     }
+    supprimerClasseChamp("injouable", ligne, col);
     ajouterClasseChamp("focus", ligne, col);
 }
 
@@ -160,6 +162,76 @@ function sudokuVersTexte() {
     $("#zonetextesudoku").val(chaine);
     console.log("Sudoku vers chaine : " + chaine);
     return chaine;
+}
+
+function verifieDoublonsDansLesCarres(sudoku) {
+    // Parcourir les carrés
+    for (const carre of coordonneesCarres) {
+        // Pour chaque carré
+
+        // On initialise un tableau de compteurs de valeurs pour ce carre
+        let tabCompteurDeValeurs = [];
+        for (let parcours = 0; parcours < 9; parcours += 1) {
+            tabCompteurDeValeurs[parcours] = 0;
+        }
+
+        // On compte combien d'occurrences de chaque nombre dans le carré
+        for (const element of carre) {
+            const ligne = element[0];
+            const col = element[1];
+            const valeur = sudoku[ligne][col];
+
+            // Si la valeur est vide, ne rien faire
+            if (valeur != "") {
+                // Sinon
+                tabCompteurDeValeurs[valeur]++;
+            }
+        }
+
+        // On applique le style invalide aux chiffres présents plusieurs fois
+        for (const element of carre) {
+            const ligne = element[0];
+            const col = element[1];
+            const valeur = sudoku[ligne][col];
+
+            // Vérifier que l'élément n'est pas dans la liste
+            if (tabCompteurDeValeurs[valeur] > 1) {
+                // Ajouter l'élément à une liste
+                ajouterClasseChamp("invalid", ligne, col);
+            }
+        }
+    }
+}
+
+function verifieDoublonsDansColonnes(sudoku) {
+    for (let col = 0; col < 9; col += 1) {
+        // On initialise un tableau de compteurs de valeurs pour cette colonne
+        let tabCompteurDeValeurs = [];
+        for (let parcours = 0; parcours < 9; parcours += 1) {
+            tabCompteurDeValeurs[parcours] = 0;
+        }
+
+        // Parcourir les éléments de la colonne pour compter les valeurs
+        for (let ligne = 0; ligne < 9; ligne += 1) {
+            const valeur = sudoku[ligne][col];
+
+            // Si la valeur est vide, ne rien faire
+            if (valeur != "") {
+                // Sinon
+                tabCompteurDeValeurs[valeur]++;
+            }
+        }
+        // Parcourir les éléments pour attribuer un style erreur aux valeurs présentes plusieurs fois
+        for (let ligne = 0; ligne < 9; ligne += 1) {
+            const valeur = sudoku[ligne][col];
+
+            // Si la valeur est vide, ne rien faire
+            if (tabCompteurDeValeurs[valeur] > 1) {
+                // Ajouter une classe d'erreur au champs
+                ajouterClasseChamp("invalid", ligne, col);
+            }
+        }
+    }
 }
 
 function verifieDoublonsDansLesLignes(sudoku) {
