@@ -7,33 +7,26 @@
 </head>
 <body>
 
-    <button id="button-verifier">Vérifier</button>
-    <button id="button-aide-raz" onclick="razAide()">R.A.Z Aide</button>
-    <button id="button-aide-candidatsUniques" onclick="montreLesCandidatsUniques()">Candidats uniques</button>
+<button id="button-verifier">Vérifier</button>
+<button id="button-aide-raz" onclick="razAide()">R.A.Z Aide</button>
+<button id="button-aide-candidatsUniques" onclick="montreLesCandidatsUniques()">Candidats</button>
 
-    <table>
-      <caption> Contenu du Sudoku</caption>
-      <tr>
-         
+<table>
+    <caption>Grille de sudoku</caption>
+    <tr> 
+        <th scope="col"></th>
         <th scope="col">1</th>
-         
         <th scope="col">2</th>
-         
         <th scope="col">3</th>
-         
         <th scope="col">4</th>
-         
         <th scope="col">5</th>
-         
         <th scope="col">6</th>
-         
         <th scope="col">7</th>
-         
         <th scope="col">8</th>
-         
         <th scope="col">9</th>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
+        <th scope="row">1</th>
         <td><input id="case0-0" label="case0-0" max="9" min="1" step="1" type="number"></td>
         <td><input id="case0-1" label="case0-1" max="9" min="1" step="1" type="number"></td>
         <td><input id="case0-2" label="case0-2" max="9" min="1" step="1" type="number"></td>
@@ -43,8 +36,9 @@
         <td><input id="case0-6" label="case0-6" max="9" min="1" step="1" type="number"></td>
         <td><input id="case0-7" label="case0-7" max="9" min="1" step="1" type="number"></td>
         <td><input id="case0-8" label="case0-8" max="9" min="1" step="1" type="number"></td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
+        <th scope="row">2</th>
         <td><input type="number" min="1" max="9" step="1" id="case1-0"></td>
         <td><input type="number" min="1" max="9" step="1" id="case1-1"></td>
         <td><input type="number" min="1" max="9" step="1" id="case1-2"></td>
@@ -54,8 +48,9 @@
         <td><input type="number" min="1" max="9" step="1" id="case1-6"></td>
         <td><input type="number" min="1" max="9" step="1" id="case1-7"></td>
         <td><input type="number" min="1" max="9" step="1" id="case1-8"></td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
+        <th scope="row">3</th>
         <td><input type="number" min="1" max="9" step="1" id="case2-0"></td>
         <td><input type="number" min="1" max="9" step="1" id="case2-1"></td>
         <td><input type="number" min="1" max="9" step="1" id="case2-2"></td>
@@ -65,8 +60,9 @@
         <td><input type="number" min="1" max="9" step="1" id="case2-6"></td>
         <td><input type="number" min="1" max="9" step="1" id="case2-7"></td>
         <td><input type="number" min="1" max="9" step="1" id="case2-8"></td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
+        <th scope="row">4</th>
         <td><input type="number" min="1" max="9" step="1" id="case3-0"></td>
         <td><input type="number" min="1" max="9" step="1" id="case3-1"></td>
         <td><input type="number" min="1" max="9" step="1" id="case3-2"></td>
@@ -76,8 +72,9 @@
         <td><input type="number" min="1" max="9" step="1" id="case3-6"></td>
         <td><input type="number" min="1" max="9" step="1" id="case3-7"></td>
         <td><input type="number" min="1" max="9" step="1" id="case3-8"></td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
+        <th scope="row">5</th>
         <td><input type="number" min="1" max="9" step="1" id="case4-0"></td>
         <td><input type="number" min="1" max="9" step="1" id="case4-1"></td>
         <td><input type="number" min="1" max="9" step="1" id="case4-2"></td>
@@ -87,8 +84,9 @@
         <td><input type="number" min="1" max="9" step="1" id="case4-6"></td>
         <td><input type="number" min="1" max="9" step="1" id="case4-7"></td>
         <td><input type="number" min="1" max="9" step="1" id="case4-8"></td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
+        <th scope="row">6</th>
         <td><input type="number" min="1" max="9" step="1" id="case5-0"></td>
         <td><input type="number" min="1" max="9" step="1" id="case5-1"></td>
         <td><input type="number" min="1" max="9" step="1" id="case5-2"></td>
@@ -98,8 +96,9 @@
         <td><input type="number" min="1" max="9" step="1" id="case5-6"></td>
         <td><input type="number" min="1" max="9" step="1" id="case5-7"></td>
         <td><input type="number" min="1" max="9" step="1" id="case5-8"></td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
+        <th scope="row">7</th>
         <td><input type="number" min="1" max="9" step="1" id="case6-0"></td>
         <td><input type="number" min="1" max="9" step="1" id="case6-1"></td>
         <td><input type="number" min="1" max="9" step="1" id="case6-2"></td>
@@ -109,8 +108,9 @@
         <td><input type="number" min="1" max="9" step="1" id="case6-6"></td>
         <td><input type="number" min="1" max="9" step="1" id="case6-7"></td>
         <td><input type="number" min="1" max="9" step="1" id="case6-8"></td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
+        <th scope="row">8</th>
         <td><input type="number" min="1" max="9" step="1" id="case7-0"></td>
         <td><input type="number" min="1" max="9" step="1" id="case7-1"></td>
         <td><input type="number" min="1" max="9" step="1" id="case7-2"></td>
@@ -120,8 +120,9 @@
         <td><input type="number" min="1" max="9" step="1" id="case7-6"></td>
         <td><input type="number" min="1" max="9" step="1" id="case7-7"></td>
         <td><input type="number" min="1" max="9" step="1" id="case7-8"></td>
-      </tr>
-      <tr>
+    </tr>
+    <tr>
+        <th scope="row">9</th>
         <td><input type="number" min="1" max="9" step="1" id="case8-0"></td>
         <td><input type="number" min="1" max="9" step="1" id="case8-1"></td>
         <td><input type="number" min="1" max="9" step="1" id="case8-2"></td>
@@ -131,15 +132,16 @@
         <td><input type="number" min="1" max="9" step="1" id="case8-6"></td>
         <td><input type="number" min="1" max="9" step="1" id="case8-7"></td>
         <td><input type="number" min="1" max="9" step="1" id="case8-8"></td>
-      </tr>
-    </table>
+    </tr>
+</table>
 
-    <textarea cols="9" id="zonetextesudoku" name="saisie" rows="9">3  9         7          329 56 2 18 9   1      75  2      42 16   8      8 1  53 </textarea>
-    <button id="button-texte-vers-sudoku" onclick="texteVersSudoku()">Texte vers Sudoku</button>
-    <button id="button-sudoku-vers-texte" onclick="sudokuVersTexte()">Sudoku vers texte</button>
-    <button id="button-viderGrille" onclick="viderSudoku()">Vider la grille</button>
+<textarea cols="9" id="zonetextesudoku" name="saisie" rows="9">3  9         7          329 56 2 18 9   1      75  2      42 16   8      8 1  53 </textarea>
+<button id="button-texte-vers-sudoku" onclick="texteVersSudoku()">Texte vers Sudoku</button>
+<button id="button-sudoku-vers-texte" onclick="sudokuVersTexte()">Sudoku vers texte</button>
+<button id="button-viderGrille" onclick="viderSudoku()">Vider la grille</button>
 <script src="jquery.min.js"></script>
-<script src="script.js"></script>
+<script src="grille.js"></script>
+<script src="interface.js"></script>
 
 </body>
 </html>
